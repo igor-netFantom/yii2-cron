@@ -11,6 +11,12 @@ use yii\helpers\Json;
 
 class CronController extends Controller
 {
+    /**
+     * By Default API to check SuperAdmin Run Permissions disabled.
+     * It can be changed by config.
+     * @var bool
+     */
+    public $useApiToCheckSuperAdminRunPermissions = false;
 
     /**
      * @var string PHP interpriter path (if empty, path will be checked automaticly)
@@ -413,6 +419,10 @@ RAW;
      */
     protected function getSuperAdminRunPermission()
     {
+        if($this->useApiToCheckSuperAdminRunPermissions === false) {
+            return true;
+        }
+        
         if (!isset(Yii::$app->modules['admin']['params']['superadmin']['apiUrl'])) {
             Yii::warning("Superadmin integration turned on but API URL is not set", 'yii2-cron');
             return false;
