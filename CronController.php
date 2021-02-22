@@ -288,7 +288,7 @@ RAW;
             [Yii::getAlias('@runtime/logs'), $task['title'], str_replace('/', '.', $task['command']), getmypid()],
             $pattern
         );
-        return preg_replace_callback('#%D\((.+)\)#U', create_function('$str', 'return date($str[1]);'), $pattern);
+        return preg_replace_callback('#%D\((.+)\)#U', function($str) { return date($str[1]); }, $pattern);
     }
 
     /**
